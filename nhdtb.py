@@ -1,3 +1,6 @@
+import streamlit as st
+import random
+
 menu_db = [
     # 한식
     {"name": "비빔밥", "time": ["점심", "저녁"], "type": "한식", "mood": ["든든한"]},
@@ -87,3 +90,25 @@ menu_db = [
     {"name": "에그베네딕트", "time": ["아침"], "type": "양식", "mood": ["가벼운"]},
     {"name": "미트볼 스파게티", "time": ["저녁"], "type": "양식", "mood": ["든든한"]},
 ]
+
+st.title("🍽️ 오늘의 식사 메뉴 추천")
+
+# 사용자 입력 받기
+time_choice = st.selectbox("식사 시간 선택", ["아침", "점심", "저녁"])
+type_choice = st.selectbox("음식 종류 선택", ["한식", "중식", "일식", "양식"])
+mood_choice = st.selectbox("기분 선택", ["든든한", "가벼운", "매운"])
+
+# 필터링
+filtered_menus = [
+    m for m in menu_db
+    if time_choice in m["time"]
+    and type_choice == m["type"]
+    and mood_choice in m["mood"]
+]
+
+if filtered_menus:
+    # 랜덤 추천 1개
+    choice = random.choice(filtered_menus)
+    st.markdown(f"### 추천 메뉴: {choice['name']}")
+else:
+    st.write("조건에 맞는 메뉴가 없습니다. 다른 조건으로 선택해주세요!")
