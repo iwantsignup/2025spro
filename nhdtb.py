@@ -113,12 +113,11 @@ menu_db = [
     {"name": "클럽 샌드위치", "time": ["점심"], "type": "양식", "mood": ["든든한"]},
 ]
 
-st.title("🍽️ 오늘의 식사 메뉴 추천 (룰렛 UI 포함)")
-
 time_choice = st.selectbox("식사 시간 선택", ["아침", "점심", "저녁"])
 type_choice = st.selectbox("음식 종류 선택", ["한식", "중식", "일식", "양식"])
-mood_choice = st.selectbox("기분 선택", ["든든한", "가벼운", "매운"])
+mood_choice = st.selectbox("기분 선택", ["가벼운", "든든한", "매운"])
 
+# 필터링
 filtered_menus = [
     m for m in menu_db
     if time_choice in m["time"]
@@ -126,20 +125,16 @@ filtered_menus = [
     and mood_choice in m["mood"]
 ]
 
-if st.button("🎡 룰렛 돌리기!"):
-    for i in range(20):
-        choice = random.choice(filtered_menus)
-        roulette_placeholder.markdown(f"### 🎯 {choice['name']}")
-        time.sleep(0.1 + i * 0.02)
+if not filtered_menus:
+    st.warning("조건에 맞는 메뉴가 없습니다! 다른 옵션을 선택해보세요.")
+else:
+    roulette_placeholder = st.empty()
 
-    final_choice = random.choice(filtered_menus)
-    roulette_placeholder = st.empty()  # 여기서 미리 선언
+    if st.button("🎡 룰렛 돌리기!"):
+        for i in range(20):
+            choice = random.choice(filtered_menus)
+            roulette_placeholder.markdown(f"### 🎯 {choice['name']}")
+            time.sleep(0.1 + i * 0.02)
 
-if st.button("🎡 룰렛 돌리기!"):
-    for i in range(20):
-        choice = random.choice(filtered_menus)
-        roulette_placeholder.markdown(f"### 🎯 {choice['name']}")
-        time.sleep(0.1 + i * 0.02)
-
-    final_choice = random.choice(filtered_menus)
-    roulette_placeholder.markdown(f"## 🎉 오늘의 메뉴는? **{final_choice['name']}** 🎉")
+        final_choice = random.choice(filtered_menus)
+        roulette_placeholder.markdown(f"## 🎉 오늘의 메뉴는? **{final_choice['name']}** 🎉")
