@@ -126,16 +126,11 @@ filtered_menus = [
     and mood_choice in m["mood"]
 ]
 
-if not filtered_menus:
-    st.warning("조건에 맞는 메뉴가 없습니다. 다른 조건으로 선택해주세요!")
-else:
-    roulette_placeholder = st.empty()
+if st.button("🎡 룰렛 돌리기!"):
+    for i in range(20):
+        choice = random.choice(filtered_menus)
+        roulette_placeholder.markdown(f"### 🎯 {choice['name']}")
+        time.sleep(0.1 + i * 0.02)
 
-    if st.button("🎡 룰렛 돌리기!"):
-        for i in range(20):  # 20번 빠르게 메뉴 변경하며 룰렛 돌리는 느낌
-            choice = random.choice(filtered_menus)
-            roulette_placeholder.markdown(f"### 🎯 {choice['name']}")
-            time.sleep(0.1 + i * 0.02)  # 점점 느려짐
-
-        final_choice = random.choice(filtered_menus)
-        roulette_placeholder.markdown(f"## 🎉 오늘의 메뉴는? **{final_choice['name']}** 🎉"
+    final_choice = random.choice(filtered_menus)
+    roulette_placeholder.markdown(f"## 🎉 오늘의 메뉴는? **{final_choice['name']}** 🎉")
