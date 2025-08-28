@@ -133,4 +133,13 @@ if st.button("🎡 룰렛 돌리기!"):
         time.sleep(0.1 + i * 0.02)
 
     final_choice = random.choice(filtered_menus)
+    roulette_placeholder = st.empty()  # 여기서 미리 선언
+
+if st.button("🎡 룰렛 돌리기!"):
+    for i in range(20):
+        choice = random.choice(filtered_menus)
+        roulette_placeholder.markdown(f"### 🎯 {choice['name']}")
+        time.sleep(0.1 + i * 0.02)
+
+    final_choice = random.choice(filtered_menus)
     roulette_placeholder.markdown(f"## 🎉 오늘의 메뉴는? **{final_choice['name']}** 🎉")
